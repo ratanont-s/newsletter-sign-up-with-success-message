@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Newsletter sign-up form with success message</title>
+
+  <!-- Tailwindcss -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        fontFamily: {
+          sans: ['Roboto', 'sans-serif'],
+        },
+        extend: {
+          colors: {
+            'tomato': 'hsl(4, 100%, 67%)',
+            'dark-state-grey': 'hsl(234, 29%, 20%)',
+            'charcoal-grey': 'hsl(235, 18%, 26%)',
+            'grey': 'hsl(231, 7%, 60%)',
+            'white': 'hsl(0, 0%, 100%)',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="text-dark-state-grey">
+  <main class="bg-dark-state-grey w-screen h-screen flex flex-col overflow-y-auto lg:p-4 lg:justify-center">
+    <!-- Sign-up form start -->
+
+    <form id="form" class="bg-white w-full h-full mx-auto lg:max-w-[928px] lg:rounded-[35px] lg:h-auto lg:shadow-xl" novalidate>
+      <div class="flex flex-col lg:flex-row-reverse lg:p-[24px]">
+        <picture>
+          <source media="(min-width: 1024px)" srcset="./assets/images/illustration-sign-up-desktop.svg">
+          <img class="w-full" src="./assets/images/illustration-sign-up-mobile.svg" alt="Illustration sign up mobile">
+        </picture>
+        <div class="px-[24px] py-[40px] lg:py-0 lg:pr-[48px] lg:flex lg:flex-col lg:justify-center">
+          <h1 class="font-bold text-4xl mb-6 lg:text-6xl">Stay updated!</h1>
+
+          <p class="mb-6">Join 60,000+ product managers receiving monthly updates on:</p>
+
+          <ul class="flex flex-col gap-y-3 mb-8">
+            <li class="flex gap-x-4 items-start"><img src="./assets/images/icon-list.svg" />Product discovery and
+              building
+              what matters</li>
+            <li class="flex gap-x-4 items-start"><img src="./assets/images/icon-list.svg" />Measuring to ensure updates
+              are a success</li>
+            <li class="flex gap-x-4 items-start"><img src="./assets/images/icon-list.svg" />And much more!</li>
+          </ul>
+
+          <div class="flex flex-col mb-6">
+            <label class="font-bold text-sm mb-2 flex justify-between" for="email">Email address <span id="emailError" class="text-tomato" hidden>Valid email required</span></label>
+            <input class="bg-white border rounded-lg p-4 outline-dark-state-grey" type="email" name="email" id="email"
+              placeholder="email@company.com" required>
+          </div>
+
+          <button
+            class="bg-dark-state-grey text-white rounded-lg p-4 w-full transition-all hover:bg-gradient-to-r hover:from-[#FD537B] hover:to-[#FD693E] hover:shadow-xl hover:shadow-tomato/40" type="submit">Subscribe
+            to monthly
+            newsletter</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Sign-up form end -->
+
+    <!-- Success message start -->
+
+    <div id="thanks" class="bg-white w-full h-full lg:max-w-[504px] lg:h-auto lg:shadow-xl lg:rounded-[35px] lg:mx-auto"
+      hidden>
+      <div class="flex flex-col px-[24px] py-[40px] lg:p-[48px]">
+        <div class="grow pt-24 pb-4 lg:pt-0">
+          <img class="mb-10" src="./assets/images/icon-success.svg" alt="Icon success">
+          <h2 class="font-bold text-4xl mb-6 lg:text-6xl">Thanks for subscribing!</h2>
+
+          <p class="mb-6">
+            A confirmation email has been sent to <b>ash@loremcompany.com</b>.
+            Please open it and click the button inside to confirm your subscription.
+          </p>
+        </div>
+
+        <button id="dismiss"
+          class="bg-dark-state-grey text-white rounded-lg p-4 w-full transition-all hover:bg-gradient-to-r hover:from-[#FD537B] hover:to-[#FD693E] hover:shadow-xl hover:shadow-tomato/40" type="button">Dismiss
+          message</button>
+      </div>
+    </div>
+
+    <!-- Success message end -->
+  </main>
+  </div>
+
+  <script>
+    document.getElementById('form').addEventListener('submit', function (event) {
+      event.preventDefault();
+      var emailInput = document.getElementById('email');
+      var email = emailInput.value;
+
+      // Email validation regex pattern
+      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (emailPattern.test(email)) {
+        // Email is valid, show the modal
+        showModal();
+        hideForm(); // Hide the form
+      } else {
+        // Invalid email, show error message
+        addInvalidClass(emailInput);
+        showError();
+      }
+    });
+
+    function addInvalidClass(element) {
+        element.classList.add('border-tomato', 'bg-tomato/10', 'placeholder:text-tomato');
+    }
+
+    function showModal() {
+      var modal = document.getElementById('thanks');
+      modal.style.display = 'block';
+
+      var closeModalBtn = document.getElementById('dismiss');
+      closeModalBtn.addEventListener('click', function () {
+        hideModal();
+        showForm();
+      });
+    }
+
+    function hideForm() {
+      var form = document.getElementById('form');
+      form.style.display = 'none';
+    }
+
+    function showForm() {
+      var form = document.getElementById('form');
+      form.style.display = 'block';
+    }
+
+    function hideModal() {
+      var modal = document.getElementById('thanks');
+      modal.style.display = 'none';
+    }
+
+    function showError() {
+      var emailError = document.getElementById('emailError');
+      // alert('Valid email required');
+      emailError.style.display = 'inline-block';
+    }
+  </script>
+</body>
+
+</html>
